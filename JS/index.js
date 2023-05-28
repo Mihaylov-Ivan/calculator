@@ -29,7 +29,7 @@ digits.forEach(digit => digit.addEventListener('click', () => {
 
 operators.forEach(op => op.addEventListener('click', () => {
     operator = op.textContent;
-    
+
     if (previousDisplay.textContent == ""){
         previousNumber = currentNumber;
         currentNumber = 0;
@@ -38,6 +38,11 @@ operators.forEach(op => op.addEventListener('click', () => {
         currentDisplay.textContent = "";
         return;
     }
+
+    currentNumber = 0;
+    currentInput = "";
+    previousDisplay.textContent = `${previousNumber} ${operator}`
+    currentDisplay.textContent = "";
 }));
 
 equal.addEventListener('click', () => {
