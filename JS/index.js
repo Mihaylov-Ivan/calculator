@@ -14,19 +14,14 @@ const previousDisplay = document.querySelector('#previous');
 let operator = "";
 let currentInput = "", previousInput = "";
 let currentNumber = 0, previousNumber = 0, answer = 0;
-let equalPressed = false, inputEntered = false;
+let equalEnabled = false, inputEntered = false;
 
 digits.forEach(digit => digit.addEventListener('click', () => {
-    // if (equalPressed){
-    //     currentInput="";
-    // }
-
     currentInput += digit.textContent;
     currentDisplay.textContent = currentInput;
     currentNumber = Number(currentInput);
     inputEntered = true;
-
-    // equalPressed = false;
+    equalEnabled = true;
 }));
 
 operators.forEach(op => op.addEventListener('click', () => {
@@ -36,6 +31,8 @@ operators.forEach(op => op.addEventListener('click', () => {
         currentInput = "";
         previousDisplay.textContent = `${previousNumber} ${operator}`
         currentDisplay.textContent = currentInput;
+        equalEnabled = false;
+        inputEntered = false;
 
         return;
     }
@@ -62,17 +59,17 @@ operators.forEach(op => op.addEventListener('click', () => {
     }
 }));
 
-// equal.addEventListener('click', () => {
-//     if (equalPressed) return;
+equal.addEventListener('click', () => {
+    if (!equalEnabled) return;
 
-//     answer = calculate(operator);
+    previousNumber = Number(previousDisplay.textContent.split(" ")[0]);
+    currentNumber = Number(currentInput);
+    answer = calculate(previousNumber, currentNumber, operator);
 
-//     previousDisplay.textContent = `${previousNumber} ${operator} ${currentNumber} =`;
-//     currentDisplay.textContent = answer;
-//     previousNumber = answer;
-//     operator = "";
-//     equalPressed = true;
-// });
+    previousDisplay.textContent = `${previousNumber} ${operator} ${currentNumber} =`;
+    currentDisplay.textContent = answer;
+    equalEnabled = false;
+});
 
 // ------------------------------------------------------------
 // Functions
@@ -94,5 +91,5 @@ function restart(){
     // previousNumber = 0;
     // answer = 0;
     previousDisplay.textContent = "";
-    equalPressed = false;
+    equalEnabled = false;
 }
