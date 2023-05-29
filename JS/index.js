@@ -106,10 +106,10 @@ clear.addEventListener('click', restart);
 
 function calculate(previousNumber, currentNumber, operator){
     switch(operator){
-        case "+": return Math.floor((previousNumber + currentNumber)*100000) / 100000;
-        case "-": return Math.floor((previousNumber - currentNumber)*100000) / 100000;
-        case "X": return Math.floor((previousNumber * currentNumber)*100000) / 100000;
-        case "÷": return Math.floor((previousNumber / currentNumber)*100000) / 100000;
+        case "+": return round((previousNumber + currentNumber), 5);
+        case "-": return round((previousNumber - currentNumber), 5);
+        case "X": return round((previousNumber * currentNumber), 5);
+        case "÷": return round((previousNumber / currentNumber), 5);
         default: return
     }
 }
@@ -126,4 +126,8 @@ function restart(){
     answer = 0;
     currentDisplay.textContent = "";
     previousDisplay.textContent = "";
+}
+
+function round(value, decimals) {
+    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
