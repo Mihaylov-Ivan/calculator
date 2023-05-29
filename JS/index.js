@@ -88,6 +88,10 @@ equal.addEventListener('click', () => {
 
 del.addEventListener('click', () => {
     if (!inputEntered) return;
+    if (equalPressed){
+        restart();
+        return;
+    }
 
     currentInput = currentDisplay.textContent.substring(0, currentInput.length-1);
     currentDisplay.textContent = currentInput;
@@ -101,10 +105,10 @@ clear.addEventListener('click', restart);
 
 function calculate(previousNumber, currentNumber, operator){
     switch(operator){
-        case "+": return (previousNumber + currentNumber).toFixed(6);
-        case "-": return (previousNumber - currentNumber).toFixed(6);
-        case "X": return (previousNumber * currentNumber).toFixed(6);
-        case "÷": return (previousNumber / currentNumber).toFixed(6);
+        case "+": return Math.floor((previousNumber + currentNumber)*100000) / 100000;
+        case "-": return Math.floor((previousNumber - currentNumber)*100000) / 100000;
+        case "X": return Math.floor((previousNumber * currentNumber)*100000) / 100000;
+        case "÷": return Math.floor((previousNumber / currentNumber)*100000) / 100000;
         default: return
     }
 }
