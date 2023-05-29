@@ -91,6 +91,8 @@ equal.addEventListener('click', () => {
     equalPressed = true;
 });
 
+clear.addEventListener('click', restart);
+
 // ------------------------------------------------------------
 // Functions
 
@@ -105,11 +107,15 @@ function calculate(previousNumber, currentNumber, operator){
 }
 
 function restart(){
+    operator = "";
     currentInput = "";
-    // previousInput = "";
-    // currentNumber = 0;
-    // previousNumber = 0;
-    // answer = 0;
-    previousDisplay.textContent = "";
+    previousInput = "";
     equalEnabled = false;
+    equalPressed = false;
+    inputEntered = false;
+    currentNumber = 0;
+    previousNumber = 0;
+    answer = 0;
+    currentDisplay.textContent = "";
+    previousDisplay.textContent = "";
 }
