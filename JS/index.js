@@ -91,6 +91,17 @@ equal.addEventListener('click', () => {
     equalPressed = true;
 });
 
+del.addEventListener('click', () => {
+    if (!inputEntered) return;
+
+    currentInput = currentDisplay.textContent;
+    currentInput = currentInput.substring(0, currentInput.length-1);
+    currentDisplay.textContent = currentInput;
+    currentNumber = Number(currentInput);
+
+    console.log(currentInput);
+});
+
 clear.addEventListener('click', restart);
 
 // ------------------------------------------------------------
