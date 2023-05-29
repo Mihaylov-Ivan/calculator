@@ -5,7 +5,6 @@ const del = document.querySelector('#del');
 const divide = document.querySelector('#divide');
 const times = document.querySelector('#times');
 const minus = document.querySelector('#minus');
-const point = document.querySelector('#point');
 const equal = document.querySelector('#equal');
 
 const currentDisplay = document.querySelector('#current');
@@ -30,6 +29,8 @@ digits.forEach(digit => digit.addEventListener('click', () => {
 }));
 
 operators.forEach(op => op.addEventListener('click', () => {
+    if(currentDisplay.textContent == '.') return;
+
     if (previousDisplay.textContent == ""){
         operator = op.textContent;
         previousNumber = currentNumber;
@@ -78,6 +79,7 @@ operators.forEach(op => op.addEventListener('click', () => {
 
 equal.addEventListener('click', () => {
     if (!equalEnabled) return;
+    if(currentDisplay.textContent == '.') return;
 
     previousNumber = Number(previousDisplay.textContent.split(" ")[0]);
     currentNumber = Number(currentInput);
