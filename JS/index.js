@@ -16,7 +16,8 @@ let currentNumber = 0, previousNumber = 0, answer = 0;
 let equalEnabled = false, equalPressed = false, inputEntered = false;
 
 digits.forEach(digit => digit.addEventListener('click', () => {
-    if(equalPressed) previousDisplay.textContent = ""
+    if (currentDisplay.textContent.includes(".") && digit.textContent==".") return;
+    if (equalPressed) previousDisplay.textContent = "";
     
     currentInput += digit.textContent;
     currentDisplay.textContent = currentInput;
@@ -27,7 +28,7 @@ digits.forEach(digit => digit.addEventListener('click', () => {
 }));
 
 operators.forEach(op => op.addEventListener('click', () => {
-    if(currentDisplay.textContent == '.') return;
+    if (currentDisplay.textContent == '.') return;
 
     if (previousDisplay.textContent == ""){
         operator = op.textContent;
@@ -73,7 +74,7 @@ operators.forEach(op => op.addEventListener('click', () => {
 
 equal.addEventListener('click', () => {
     if (!equalEnabled) return;
-    if(currentDisplay.textContent == '.') return;
+    if (currentDisplay.textContent == '.') return;
 
     previousNumber = Number(previousDisplay.textContent.split(" ")[0]);
     currentNumber = Number(currentInput);
