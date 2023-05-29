@@ -1,3 +1,4 @@
+// 
 const digits = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
 const clear = document.querySelector('#clear');
@@ -56,6 +57,7 @@ operators.forEach(op => op.addEventListener('click', () => {
         previousNumber = Number(previousDisplay.textContent.split(" ")[0]);
         currentNumber = Number(currentInput);
         answer = calculate(previousNumber, currentNumber, operator);
+        if (isNaN(answer)) return;
         operator = op.textContent;
         currentInput = "";
         previousDisplay.textContent = `${answer} ${operator}`
@@ -79,6 +81,7 @@ equal.addEventListener('click', () => {
     previousNumber = Number(previousDisplay.textContent.split(" ")[0]);
     currentNumber = Number(currentInput);
     answer = calculate(previousNumber, currentNumber, operator);
+    if (isNaN(answer)) return;
     previousDisplay.textContent = `${previousNumber} ${operator} ${currentNumber} =`;
     currentDisplay.textContent = answer;
     currentInput = "";
