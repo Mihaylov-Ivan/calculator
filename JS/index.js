@@ -1,4 +1,3 @@
-// 
 const digits = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
 const clear = document.querySelector('#clear');
@@ -17,7 +16,9 @@ let currentNumber = 0, previousNumber = 0, answer = 0;
 let equalEnabled = false, equalPressed = false, inputEntered = false;
 
 digits.forEach(digit => digit.addEventListener('click', () => {
+    // Do not allow more than one point
     if (currentDisplay.textContent.includes(".") && digit.textContent==".") return;
+    // Restart the calculator after equal pressed
     if (equalPressed) previousDisplay.textContent = "";
     
     currentInput += digit.textContent;
@@ -29,8 +30,10 @@ digits.forEach(digit => digit.addEventListener('click', () => {
 }));
 
 operators.forEach(op => op.addEventListener('click', () => {
+    // Do not allow calculations when the input is a single point
     if (currentDisplay.textContent == '.') return;
 
+    // When there is not a previous number entered
     if (previousDisplay.textContent == ""){
         operator = op.textContent;
         currentInput = "";
@@ -42,6 +45,7 @@ operators.forEach(op => op.addEventListener('click', () => {
         return;
     }
 
+    // When the equal button is pressed and calculations are made with the result
     if (equalPressed){
         operator = op.textContent;
         currentInput = "";
@@ -53,6 +57,7 @@ operators.forEach(op => op.addEventListener('click', () => {
         return;
     }
 
+    // Restart the calculator when digits are entered without an operator
     if (inputEntered && operator != ""){
         previousNumber = Number(previousDisplay.textContent.split(" ")[0]);
         currentNumber = Number(currentInput);
@@ -66,6 +71,7 @@ operators.forEach(op => op.addEventListener('click', () => {
         return;
     }
     
+    // Change the selected operator when a second number is not entered
     if (!inputEntered){
         operator = op.textContent;
         previousNumber = Number(previousDisplay.textContent.split(" ")[0]);
@@ -75,12 +81,14 @@ operators.forEach(op => op.addEventListener('click', () => {
 }));
 
 equal.addEventListener('click', () => {
+    // Only allow to press the equal button once
     if (!equalEnabled) return;
     if (currentDisplay.textContent == '.') return;
 
     previousNumber = Number(previousDisplay.textContent.split(" ")[0]);
     currentNumber = Number(currentInput);
     answer = calculate(previousNumber, currentNumber, operator);
+    // Prevent division by zero
     if (isNaN(answer)) return;
     previousDisplay.textContent = `${previousNumber} ${operator} ${currentNumber} =`;
     currentDisplay.textContent = answer;
