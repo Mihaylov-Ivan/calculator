@@ -17,68 +17,67 @@ let currentNumber = 0, previousNumber = 0, answer = 0;
 let equalPressed = false, inputEntered = false;
 
 digits.forEach(digit => digit.addEventListener('click', () => {
-    if (equalPressed){
-        currentInput="";
-    }
+    // if (equalPressed){
+    //     currentInput="";
+    // }
 
     currentInput += digit.textContent;
     currentDisplay.textContent = currentInput;
     currentNumber = Number(currentInput);
-
     inputEntered = true;
 
-    equalPressed = false;
-
-    console.log(operator);
-    console.log("");
-    console.log(previousNumber);
-    console.log(currentNumber);
+    // equalPressed = false;
 }));
 
 operators.forEach(op => op.addEventListener('click', () => {
+    if (previousDisplay.textContent == ""){
+        operator = op.textContent;
+        previousNumber = currentNumber;
+        currentInput = "";
+        previousDisplay.textContent = `${previousNumber} ${operator}`
+        currentDisplay.textContent = currentInput;
+
+        return;
+    }
+
     if (inputEntered && operator != ""){
-        answer = calculate(operator);
+        previousNumber = Number(previousDisplay.textContent.split(" ")[0]);
+        currentNumber = Number(currentInput);
+        answer = calculate(previousNumber, currentNumber, operator);
         operator = op.textContent;
         previousDisplay.textContent = `${answer} ${operator}`
         currentInput = "";
-        currentDisplay.textContent = "";
-        
+        currentDisplay.textContent = currentInput;
+        inputEntered = false;
+
         return;
     }
     
-    operator = op.textContent;
+    if (!inputEntered){
+        operator = op.textContent;
+        previousNumber = Number(previousDisplay.textContent.split(" ")[0]);
+        previousDisplay.textContent = `${previousNumber} ${operator}`;
 
-    if (previousDisplay.textContent == ""){
-        previousNumber = currentNumber;
-        currentNumber = 0;
-        currentInput = "";
-        previousDisplay.textContent = `${previousNumber} ${operator}`
-        currentDisplay.textContent = "";
         return;
     }
-
-    currentNumber = 0;
-    currentInput = "";
-    previousDisplay.textContent = `${previousNumber} ${operator}`
-    currentDisplay.textContent = "";
 }));
 
-equal.addEventListener('click', () => {
-    if (equalPressed) return;
+// equal.addEventListener('click', () => {
+//     if (equalPressed) return;
 
-    answer = calculate(operator);
+//     answer = calculate(operator);
 
-    previousDisplay.textContent = `${previousNumber} ${operator} ${currentNumber} =`;
-    currentDisplay.textContent = answer;
-    previousNumber = answer;
-    operator = "";
-    equalPressed = true;
-});
+//     previousDisplay.textContent = `${previousNumber} ${operator} ${currentNumber} =`;
+//     currentDisplay.textContent = answer;
+//     previousNumber = answer;
+//     operator = "";
+//     equalPressed = true;
+// });
 
 // ------------------------------------------------------------
 // Functions
 
-function calculate(operator){
+function calculate(previousNumber, currentNumber, operator){
     switch(operator){
         case "+": return previousNumber + currentNumber;
         case "-": return previousNumber - currentNumber;
