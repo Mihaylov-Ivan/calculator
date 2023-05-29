@@ -14,20 +14,38 @@ const previousDisplay = document.querySelector('#previous');
 let operator = "";
 let currentInput = "", previousInput = "";
 let currentNumber = 0, previousNumber = 0, answer = 0;
-let equalPressed = false;
+let equalPressed = false, inputEntered = false;
 
 digits.forEach(digit => digit.addEventListener('click', () => {
     if (equalPressed){
         currentInput="";
     }
+
     currentInput += digit.textContent;
     currentDisplay.textContent = currentInput;
     currentNumber = Number(currentInput);
 
+    inputEntered = true;
+
     equalPressed = false;
+
+    console.log(operator);
+    console.log("");
+    console.log(previousNumber);
+    console.log(currentNumber);
 }));
 
 operators.forEach(op => op.addEventListener('click', () => {
+    if (inputEntered && operator != ""){
+        answer = calculate(operator);
+        operator = op.textContent;
+        previousDisplay.textContent = `${answer} ${operator}`
+        currentInput = "";
+        currentDisplay.textContent = "";
+        
+        return;
+    }
+    
     operator = op.textContent;
 
     if (previousDisplay.textContent == ""){
@@ -68,4 +86,14 @@ function calculate(operator){
         case "÷": return previousNumber / currentNumber;
         default: return
     }
+}
+
+function restart(){
+    currentInput = "";
+    // previousInput = "";
+    // currentNumber = 0;
+    // previousNumber = 0;
+    // answer = 0;
+    previousDisplay.textContent = "";
+    equalPressed = false;
 }
