@@ -14,14 +14,19 @@ const previousDisplay = document.querySelector('#previous');
 let operator = "";
 let currentInput = "", previousInput = "";
 let currentNumber = 0, previousNumber = 0, answer = 0;
-let equalEnabled = false, inputEntered = false;
+let equalEnabled = false, equalPressed = false, inputEntered = false;
 
 digits.forEach(digit => digit.addEventListener('click', () => {
+    if(equalPressed){
+        previousDisplay.textContent = "";
+    }
+    
     currentInput += digit.textContent;
     currentDisplay.textContent = currentInput;
     currentNumber = Number(currentInput);
     inputEntered = true;
     equalEnabled = true;
+    equalPressed = false;
 }));
 
 operators.forEach(op => op.addEventListener('click', () => {
@@ -49,6 +54,18 @@ operators.forEach(op => op.addEventListener('click', () => {
 
         return;
     }
+
+    if (equalPressed){
+        operator = op.textContent;
+        previousNumber = Number(currentDisplay.textContent);
+        previousDisplay.textContent = `${previousNumber} ${operator}`
+        currentInput = "";
+        currentDisplay.textContent = currentInput;
+        inputEntered = false;
+        equalPressed = false;
+
+        return;
+    }
     
     if (!inputEntered){
         operator = op.textContent;
@@ -68,7 +85,10 @@ equal.addEventListener('click', () => {
 
     previousDisplay.textContent = `${previousNumber} ${operator} ${currentNumber} =`;
     currentDisplay.textContent = answer;
+    currentInput = "";
+    operator = "";
     equalEnabled = false;
+    equalPressed = true;
 });
 
 // ------------------------------------------------------------
