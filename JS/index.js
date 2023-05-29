@@ -101,10 +101,10 @@ clear.addEventListener('click', restart);
 
 function calculate(previousNumber, currentNumber, operator){
     switch(operator){
-        case "+": return previousNumber + currentNumber;
-        case "-": return previousNumber - currentNumber;
-        case "X": return previousNumber * currentNumber;
-        case "÷": return previousNumber / currentNumber;
+        case "+": return (previousNumber + currentNumber).toFixed(6);
+        case "-": return (previousNumber - currentNumber).toFixed(6);
+        case "X": return (previousNumber * currentNumber).toFixed(6);
+        case "÷": return (previousNumber / currentNumber).toFixed(6);
         default: return
     }
 }
